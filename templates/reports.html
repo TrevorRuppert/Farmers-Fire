@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+</head>
+<body>
+{% extends "layout.html" %}
+{% block content %}
+  <div class="index">
+    <h1>Report Generation</h1>
+      <p>Search for accounts to generate a report for.</p>
+<div class="jumbotron">
+        <form action="" class="form-signin" method="post">
+        <label for="searchFirst" class="sr-only">First Name</label>
+            <input type="name" value="{{request.form.searchFirst}}" name="searchFirst" id="searchFirst" class="form-control" placeholder="First Name" required autofocus>
+        <label for="searchLast" class="sr-only">Last Name</label>
+            <input type="name" value="{{request.form.searchLast}}" name="searchLast" id="searchLast" class="form-control" placeholder="Last Name">
+        <label for="searchPhone" class="sr-only">Phone Number</label>
+            <input type="name" value="{{request.form.searchPhone}}" name="searchPhone" id="searchPhone" class="form-control" placeholder="Phone Number">
+               <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+        </form>
+      </div>
+    <br>
+      <div id="results">
+                <table class="blueTable">
+<thead>
+<tr>
+    <th>Policy(ies) ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Street</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zip Code</th>
+    <th>Phone Number</th>
+    <th>Letter</th>
+    <th>Generate</th>
+</tr>
+</thead>
+<tbody>
+{% for contact in contacts %}
+  {% for policy in contact.policies %}
+<tr>
+    <td>{{ policy.id }}</td>
+    <td>{{contact.first}}</td>
+    <td>{{contact.last}}</td>
+    <td>{{contact.street}}</td>
+    <td>{{contact.city}}</td>
+    <td>{{contact.state}}</td>
+    <td>{{contact.zipcode}}</td>
+    <td>{{contact.phonenumber}}</td>
+    <form action="/genreport" target="_blank">
+    <td><select name="lid"><option value="1" id="lid">{{letter.title}}</option></select></td>
+    <td><input type="number" placeholder="Policy ID" id="policyId" name="policyId" value={{policy.id}} hidden><input type="submit" value="Generate Report"></form></td>
+</tr>
+{% endfor %}
+{% endfor %}
+</tbody>
+</table>
+      </div>
+
+  </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/signup.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Log In</title>
+</head>
+<body>
+{% extends "layout.html" %}
+{% block content %}
+  <div class="index">
+       <div class="jumbotron">
+        <h1>Log In</h1>
+        <form action="" class="form-signin" method="post">
+        <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="remember_me" class="sr-only">Remember me</label>
+            <p>Remember Me? <input type="checkbox" name="remember_me" id="remember_me"></p>
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
+            <a href="{{url_for('signup')}}">Don't have an account? sign up here!</a>
+      </form>
+      </div>
+  </div>
+{% endblock %}
+</body>
+</html>

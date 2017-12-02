@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="index">
+    <h1>Results</h1>
+      <table class="blueTable">
+<thead>
+<tr>
+    <th>Policy(ies) ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Street</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zip Code</th>
+    <th>Phone Number</th>
+    <th>Letter</th>
+    <th>Generate</th>
+</tr>
+</thead>
+<tbody>
+{% for contact in contacts %}
+  {% for policy in contact.policies %}
+<tr>
+    <td>{{ policy.id }}</td>
+    <td>{{contact.first}}</td>
+    <td>{{contact.last}}</td>
+    <td>{{contact.street}}</td>
+    <td>{{contact.city}}</td>
+    <td>{{contact.state}}</td>
+    <td>{{contact.zipcode}}</td>
+    <td>{{contact.phonenumber}}</td>
+    <form action="/genreport" target="_blank">
+    <td><select name="lid"><option value="1" id="lid">{{letter.title}}</option></select></td>
+    <td><input type="number" placeholder="Policy ID" id="policyId" name="policyId" value={{policy.id}} hidden><input type="submit" value="Generate Report"></form></td>
+</tr>
+{% endfor %}
+{% endfor %}
+</tbody>
+</table>
+
+  </div>
+{% endblock %}

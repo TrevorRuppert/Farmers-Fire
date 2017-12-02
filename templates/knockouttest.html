@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+</head>
+<body>
+<h3>Tasks</h3>
+
+<form data-bind="submit: addTask">
+    Add task: <input data-bind="value: newTaskText" placeholder="What needs to be done?" />
+    <button type="submit">Add</button>
+</form>
+
+<ul data-bind="foreach: tasks, visible: tasks().length > 0">
+    <li>
+        <input type="checkbox" data-bind="checked: isDone" />
+        <input data-bind="value: title, disable: isDone" />
+        <a href="#" data-bind="click: $parent.removeTask">Delete</a>
+    </li>
+</ul>
+<form action="/process" method="post">
+    <input type="hidden" name="tasks" data-bind="value: ko.toJSON(tasks)" />
+    <button type="submit">Save</button>
+</form>
+<script type="text/javascript">
+
+function Task(data) {
+    this.title = ko.observable(data.title);
+    this.isDone = ko.observable(data.isDone);
+}
+
+function TaskListViewModel() {
+    // Data
+    var self = this;
+    self.tasks = ko.observableArray([]);
+    self.newTaskText = ko.observable();
+    self.incompleteTasks = ko.computed(function() {
+        return ko.utils.arrayFilter(self.tasks(), function(task) { return !task.isDone() });
+    });
+
+    // Operations
+    self.addTask = function() {
+        self.tasks.push(new Task({ title: this.newTaskText() }));
+        self.newTaskText("");
+    };
+    self.removeTask = function(task) { self.tasks.remove(task) };
+    $.getJSON("/tasks", function(allData) {
+        var mappedTasks = $.map(allData, function(item) { return new Task(item) });
+        self.tasks(mappedTasks);
+    });
+}
+
+ko.applyBindings(new TaskListViewModel());
+
+</script>
+</body>
+</html>
