@@ -144,9 +144,7 @@ def reports():
     last = request.form['searchLast']
     phone = request.form['searchPhone']
     contacts = Contact.query.filter(Contact.first.contains(first), Contact.last.contains(last), Contact.phonenumber.contains(phone)).all()
-    contacts = [str(c) for c in contacts]
-    jsonify(contacts)
-    return jsonify([contacts])
+    return jsonify(contacts=contacts)
 
 
 
