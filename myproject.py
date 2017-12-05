@@ -139,19 +139,17 @@ def index():
 def reports():
     if request.method == "GET":
         return render_template('reports.html')
-    letter = Letter.query.get(1)
-    first = request.form['searchFirst']
-    last = request.form['searchLast']
-    phone = request.form['searchPhone']
-    contacts = Contact.query.filter(Contact.first.contains(first), Contact.last.contains(last), Contact.phonenumber.contains(phone)).all()
-    return jsonify(contacts=contacts)
 
 
 
 
 @app.route('/process', methods=['GET', 'POST'])
 def process():
-    return render_template('knockouttest.html')
+    first = request.form['searchFirst']
+    last = request.form['searchLast']
+    phone = request.form['searchPhone']
+    contacts = Contact.query.filter(Contact.first.contains(first), Contact.last.contains(last), Contact.phonenumber.contains(phone)).all()
+    return jsonify(contacts=contacts)
 
 @app.route('/results', methods=['GET','POST'])
 @login_required

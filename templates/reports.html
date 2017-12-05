@@ -34,33 +34,37 @@
     <th>State</th>
     <th>Zip Code</th>
     <th>Phone Number</th>
-    <th>Letter</th>
-    <th>Generate</th>
 </tr>
 </thead>
 <tbody>
-{% for contact in contacts %}
-  {% for policy in contact.policies %}
-<tr>
-    <td>{{ policy.id }}</td>
-    <td>{{contact.first}}</td>
-    <td>{{contact.last}}</td>
-    <td>{{contact.street}}</td>
-    <td>{{contact.city}}</td>
-    <td>{{contact.state}}</td>
-    <td>{{contact.zipcode}}</td>
-    <td>{{contact.phonenumber}}</td>
-    <form action="/genreport" target="_blank">
-    <td><select name="lid"><option value="1" id="lid">{{letter.title}}</option></select></td>
-    <td><input type="number" placeholder="Policy ID" id="policyId" name="policyId" value={{policy.id}} hidden><input type="submit" value="Generate Report"></form></td>
+<tr data-bind="foreach: contacts">
+    <td data-bind="text: id"></td>
+    <td data-bind="text: first"></td>
+    <td data-bind="text: last"></td>
+    <td data-bind="text: street"></td>
+    <td data-bind="text: city"></td>
+    <td data-bind="text: state"></td>
+    <td data-bind="text: zipcode"></td>
+    <td data-bind="text: phonenumber"></td>
 </tr>
-{% endfor %}
-{% endfor %}
 </tbody>
 </table>
       </div>
 
   </div>
+<script type="text/javascript">
+    function results(data) {
+    this.id = ko.observable(data.id);
+    this.first = ko.observable(data.first);
+    this.last = ko.observable(data.last);
+    this.street = ko.observable(data.street);
+    this.city = ko.observable(data.city);
+    this.state = ko.observable(data.state);
+    this.zipcode = ko.observable(data.zipcode);
+    this.phonenumber = ko.observable(data.phonenumber);
+}
+    var self = this;
+</script>
 {% endblock %}
 </body>
 </html>
