@@ -27,6 +27,7 @@ login_manager.login_view = 'login'
 
 admin = Admin(app)
 
+
 class User(db.Model):
     __tablename__ = 'User'
     can_create = False
@@ -141,8 +142,6 @@ def reports():
         return render_template('reports.html')
 
 
-
-
 @app.route('/process', methods=['GET', 'POST'])
 def process():
     first = request.form['searchFirst']
@@ -150,6 +149,7 @@ def process():
     phone = request.form['searchPhone']
     contacts = Contact.query.filter(Contact.first.contains(first), Contact.last.contains(last), Contact.phonenumber.contains(phone)).all()
     return jsonify(contacts=contacts)
+
 
 @app.route('/results', methods=['GET','POST'])
 @login_required
@@ -227,7 +227,6 @@ def admin():
     return render_template('admin.html')
 
 
-
 @app.route('/genreport')
 def pdf_template():
     lid = request.args.get('lid')
@@ -242,7 +241,6 @@ def pdf_template():
     response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
 
     return response
-
 
 
 if __name__ == '__main__':

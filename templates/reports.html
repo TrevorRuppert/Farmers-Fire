@@ -11,7 +11,7 @@
     <h1>Report Generation</h1>
       <p>Search for accounts to generate a report for.</p>
 <div class="jumbotron">
-        <form action="" class="form-signin" method="post">
+        <form action="/process" class="form-signin" method="post" id="query">
         <label for="searchFirst" class="sr-only">First Name</label>
             <input type="name" value="{{request.form.searchFirst}}" name="searchFirst" id="searchFirst" class="form-control" placeholder="First Name" required autofocus>
         <label for="searchLast" class="sr-only">Last Name</label>
@@ -53,17 +53,26 @@
 
   </div>
 <script type="text/javascript">
-    function results(data) {
-    this.id = ko.observable(data.id);
-    this.first = ko.observable(data.first);
-    this.last = ko.observable(data.last);
-    this.street = ko.observable(data.street);
-    this.city = ko.observable(data.city);
-    this.state = ko.observable(data.state);
-    this.zipcode = ko.observable(data.zipcode);
-    this.phonenumber = ko.observable(data.phonenumber);
-}
     var self = this;
+
+    function QueryViewModel(){
+        $.getJSON('/process')
+        self.id = ko.observable('id')
+        self.first = ko.observable('first')
+        self.last = ko.observable('last')
+        self.street = ko.observable('street')
+        self.city = ko.observable('city')
+        self.state = ko.observable('state')
+        self.zipcode = ko.observable('zipcode')
+        self.phonenumber = ko.observable('phonenumber')
+
+    }
+
+    $('#query').submit(function (e) {
+       e.preventDefault();
+    });
+
+ko.applyBindings(new QueryViewModel());
 </script>
 {% endblock %}
 </body>
